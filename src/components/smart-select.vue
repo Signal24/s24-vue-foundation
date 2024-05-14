@@ -11,6 +11,7 @@
             @focus="handleInputFocused"
             @blur="handleInputBlurred"
             :required="required"
+            data-1p-ignore
         />
         <div v-if="shouldDisplayOptions" ref="optionsContainer" class="vf-smart-select-options">
             <div v-if="!isLoaded" class="no-results">Loading...</div>
