@@ -63,9 +63,8 @@ export type Vue__ComponentPublicInstanceConstructor<
     new (...args: any[]): T;
 };
 
-export type ObjectComponentConfig<T extends Vue__ComponentPublicInstanceConstructor> = T extends Vue__ComponentPublicInstanceConstructor<infer P>
-    ? P
-    : never;
+export type ObjectComponentConfig<T extends Vue__ComponentPublicInstanceConstructor> =
+    T extends Vue__ComponentPublicInstanceConstructor<infer P> ? P : never;
 export type ObjectComponentProps<T extends Vue__ComponentPublicInstanceConstructor> = Writable<
     Omit<ObjectComponentConfig<T>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
 >;
