@@ -19,21 +19,22 @@ import {
 import OverlayAnchor from './overlay-anchor.vue';
 import type { OverlayAnchorOptions } from './overlay-types';
 
-interface OverlayOptions {
+interface OverlayOptions<C extends OverlayComponent, R extends ComponentReturn<C>> {
     anchor?: OverlayAnchorOptions;
+    onCallback?: (result: R) => void | Promise<boolean>;
 }
 
-export interface OverlayInjection<C extends OverlayComponent> {
+export interface OverlayInjection<C extends OverlayComponent, R extends ComponentReturn<C>> {
     id: string;
     component: OverlayComponentUnwrapped<C>;
     props: OverlayComponentProps<C>;
-    options: OverlayOptions;
+    options: OverlayOptions<C, R>;
     vnode: VNode;
     wrapperVnode?: VNode;
 }
 
 let overlayCount = 0;
-const OverlayInjections: OverlayInjection<any>[] = reactive([]);
+const OverlayInjections: OverlayInjection<any, any>[] = reactive([]);
 
 export const OverlayContainer = defineComponent({
     setup() {
@@ -92,11 +93,11 @@ type ComponentReturn<M extends OverlayComponent> = OverlayComponentProps<M> exte
 
 export type AnyComponentPublicInstance = { $?: ComponentInternalInstance };
 
-export function createOverlayInjection<C extends OverlayComponent>(
+export function createOverlayInjection<C extends OverlayComponent, R extends ComponentReturn<C>>(
     component: C,
     props: OverlayComponentProps<C>,
-    options?: OverlayOptions
-): OverlayInjection<C> {
+    options?: OverlayOptions<C, R>
+): OverlayInjection<C, R> {
     // create or reconfigure the existing overlay target
     // re-injecting every time keeps the overlay container at the very end of the DOM
     const targetEl = document.getElementById('vf-overlay-target') ?? document.createElement('div');
@@ -110,7 +111,7 @@ export function createOverlayInjection<C extends OverlayComponent>(
     const wrapperVnode = options?.anchor ? h(OverlayAnchor, { overlayId, anchor: options.anchor }, () => [vnode]) : undefined;
 
     // todo: dunno what's going on with types here
-    const injection: OverlayInjection<C> = {
+    const injection: OverlayInjection<C, R> = {
         id: overlayId,
         component: rawComponent as any,
         props,
@@ -152,7 +153,7 @@ export function dismissOverlayInjectionById(id: string) {
     return false;
 }
 
-export function removeOverlayInjection(injection: OverlayInjection<any>) {
+export function removeOverlayInjection(injection: OverlayInjection<any, any>) {
     const index = OverlayInjections.indexOf(injection);
     if (index >= 0) {
         OverlayInjections.splice(index, 1);
@@ -162,11 +163,22 @@ export function removeOverlayInjection(injection: OverlayInjection<any>) {
 export async function presentOverlay<C extends OverlayComponent, R extends ComponentReturn<C>>(
     component: C,
     props: Omit<OverlayComponentProps<C>, 'callback'>,
-    options?: OverlayOptions
+    options?: OverlayOptions<C, R>
 ): Promise<R | undefined> {
     return new Promise<R>(resolve => {
-        let overlayInjection: OverlayInjection<C> | null = null;
-        const callback = (result: R) => {
+        let overlayInjection: OverlayInjection<C, R> | null = null;
+        const callback = async (result: R) => {
+            if (options?.onCallback) {
+                const hookResult = options.onCallback(result);
+                if (typeof hookResult === 'object' && 'then' in hookResult && typeof hookResult.then === 'function') {
+                    // ^ hack for ZoneAwarePromise
+                    const hookResultValue = await hookResult;
+                    if (hookResultValue === false) {
+                        return;
+                    }
+                }
+            }
+
             removeOverlayInjection(overlayInjection!);
             resolve(result);
         };

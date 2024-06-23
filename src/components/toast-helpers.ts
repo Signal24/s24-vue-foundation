@@ -2,7 +2,7 @@ import { createOverlayInjection, type OverlayInjection, removeOverlayInjection }
 import Toast, { type IToastOptions } from './toast.vue';
 
 export function showToast(options: IToastOptions) {
-    const injection: OverlayInjection<typeof Toast> = createOverlayInjection(Toast, {
+    const injection: OverlayInjection<typeof Toast, unknown> = createOverlayInjection(Toast, {
         ...options,
         callback: () => removeOverlayInjection(injection)
     });
