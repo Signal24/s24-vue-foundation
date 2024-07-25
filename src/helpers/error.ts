@@ -21,14 +21,22 @@ export function toError(err: any) {
     return err instanceof Error ? err : new Error(String(err));
 }
 
-export async function handleErrorAndAlert(errIn: any, alertTitle?: string) {
+interface IErrorAlertOptions {
+    title?: string;
+    classes?: string[];
+}
+export async function handleErrorAndAlert(errIn: any, options?: IErrorAlertOptions) {
     const err = toError(errIn);
 
     if (!(err instanceof UserError)) {
         VfOptions.errorHandler(err);
     }
 
-    return alertTitle ? showAlert(alertTitle, err) : showAlert(err);
+    return showAlert({
+        title: options?.title,
+        message: err,
+        classes: options?.classes
+    });
 }
 
 export async function handleError(errIn: any) {
