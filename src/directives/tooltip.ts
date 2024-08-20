@@ -47,6 +47,8 @@ interface ITooltipOptions {
     class?: string | string[];
 }
 
+// todo: improve with mutation observer to see removal of node
+
 class VfTooltip {
     private lastMoveEvt?: MouseEvent;
     private checkInterval?: ReturnType<typeof setInterval>;
@@ -66,6 +68,7 @@ class VfTooltip {
     ) {
         el.addEventListener('mouseenter', this.handleTargetMouseEnterWithContext);
         el.addEventListener('mouseleave', this.handleTargetMouseLeaveWithContext);
+        el.addEventListener('click', this.handleTargetMouseLeaveWithContext);
     }
 
     configure(config: ITooltipOptions) {
@@ -189,5 +192,6 @@ class VfTooltip {
 
         this.el.removeEventListener('mouseenter', this.handleTargetMouseEnterWithContext);
         this.el.removeEventListener('mouseleave', this.handleTargetMouseLeaveWithContext);
+        this.el.removeEventListener('click', this.handleTargetMouseLeaveWithContext);
     }
 }
