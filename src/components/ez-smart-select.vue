@@ -46,6 +46,6 @@ watch(
     }
 );
 watch(selectedItem, value => {
-    emit('update:modelValue', value ? computedOpts.value.find(o => isEqual(o, value))?.value ?? null : null);
+    emit('update:modelValue', value ? (computedOpts.value.find(o => isEqual(o, value))?.value ?? null) : null);
 });
 </script>

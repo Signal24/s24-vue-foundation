@@ -1,5 +1,5 @@
 <template>
-    <Modal class="vf-alert" :class="classes">
+    <Modal :class="['vf-alert', ...(classes ?? [])]">
         <template v-if="title" v-slot:header>
             <h1>{{ title }}</h1>
         </template>

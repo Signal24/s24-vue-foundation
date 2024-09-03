@@ -29,7 +29,7 @@ const props = defineProps<{
     closeOnMaskClick?: boolean;
     scrolls?: boolean;
     closeX?: boolean;
-    class?: string;
+    class?: string | string[];
 }>();
 
 defineEmits(['formSubmit']);
@@ -41,7 +41,7 @@ const form = ref<HTMLFormElement>();
 const isHidden = ref(false);
 
 const classList = computed(() => {
-    return compact([props.class, isHidden.value && 'hidden']);
+    return compact([...(Array.isArray(props.class) ? props.class : [props.class]), isHidden.value && 'hidden']);
 });
 
 onMounted(() => {
