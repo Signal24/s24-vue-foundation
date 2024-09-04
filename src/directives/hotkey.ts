@@ -41,6 +41,7 @@ function reset(el: HTMLButtonElement, binding: DirectiveBinding<string>) {
 }
 
 function handleKeydown(event: KeyboardEvent) {
+    if (typeof event.key !== 'string') return;
     const hotkey = event.key.toLowerCase();
     const elements = ElementsByHotkey.get(hotkey);
     if (elements) {
