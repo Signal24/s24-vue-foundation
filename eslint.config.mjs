@@ -15,6 +15,7 @@ export default tseslint.config(
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     ...pluginVue.configs['flat/recommended'],
+    eslintPluginPrettierRecommended,
 
     // register parser options
     {
@@ -36,7 +37,6 @@ export default tseslint.config(
     },
 
     // plugins & configs
-    eslintPluginPrettierRecommended,
     {
         plugins: {
             'unused-imports': unusedImports,
