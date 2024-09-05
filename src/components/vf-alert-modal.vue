@@ -1,18 +1,18 @@
 <template>
     <Modal :class="['vf-alert', ...(classes ?? [])]">
-        <template v-if="title" v-slot:header>
+        <template v-if="title" #header>
             <h1>{{ title }}</h1>
         </template>
 
         <div v-if="isHtml" :innerHtml="message" class="user-message"></div>
         <div v-else :innerText="textMessage"></div>
 
-        <template v-if="!isBare" v-slot:footer>
+        <template v-if="!isBare" #footer>
             <template v-if="shouldConfirm">
-                <button class="primary" @click="() => callback(true)" v-autofocus>Confirm</button>
+                <button v-autofocus class="primary" @click="() => callback(true)">Confirm</button>
                 <button class="default" @click="() => callback(false)">Cancel</button>
             </template>
-            <button v-else class="default" @click="() => callback(true)" v-autofocus>OK</button>
+            <button v-else v-autofocus class="default" @click="() => callback(true)">OK</button>
         </template>
     </Modal>
 </template>
@@ -21,7 +21,7 @@
 import { computed } from 'vue';
 
 import { formatError } from '../helpers/error';
-import Modal from './modal.vue';
+import Modal from './vf-modal.vue';
 
 const props = defineProps<{
     isBare?: boolean;

@@ -1,8 +1,8 @@
-import VfAjaxSelect from './ajax-select.vue';
-import VfAlertModal from './alert-modal.vue';
-import VfEzSmartSelect from './ez-smart-select.vue';
-import VfModal from './modal.vue';
-import VfSmartSelect from './smart-select.vue';
+import VfAjaxSelect from './vf-ajax-select.vue';
+import VfAlertModal from './vf-alert-modal.vue';
+import VfEzSmartSelect from './vf-ez-smart-select.vue';
+import VfModal from './vf-modal.vue';
+import VfSmartSelect from './vf-smart-select.vue';
 
 export * from './alert-helpers';
 export * from './overlay-container';

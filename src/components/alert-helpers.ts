@@ -1,5 +1,5 @@
-import AlertModal from './alert-modal.vue';
 import { createOverlayInjection, presentOverlay, removeOverlayInjection } from './overlay-container';
+import AlertModal from './vf-alert-modal.vue';
 
 interface IAlertOptions {
     title?: string;

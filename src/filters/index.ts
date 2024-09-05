@@ -10,6 +10,7 @@ function bytes(value: number) {
     return `${stringResult} ${unit}`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function dash(value: any) {
     return value !== null && value !== undefined && String(value).length ? value : '-';
 }

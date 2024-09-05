@@ -62,13 +62,13 @@ function removeDuration(el: DurationElement) {
 function secondsToString(seconds: number, shouldSkipSeconds?: boolean) {
     const result = [];
     const days = Math.floor(seconds / 86400);
-    days && result.push(days + 'd');
+    if (days) result.push(days + 'd');
     seconds -= days * 86400;
     const hours = Math.floor(seconds / 3600);
-    (days || hours) && result.push(hours + 'h');
+    if (days || hours) result.push(hours + 'h');
     seconds -= hours * 3600;
     const minutes = Math.floor(seconds / 60);
-    (days || hours || minutes) && result.push(minutes + 'm');
+    if (days || hours || minutes) result.push(minutes + 'm');
     if (!shouldSkipSeconds) {
         seconds -= minutes * 60;
         result.push(seconds + 's');

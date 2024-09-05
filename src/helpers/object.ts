@@ -12,6 +12,7 @@ export function nullifyEmptyInputs<T extends Record<string, unknown>, K extends 
     const result = { ...obj };
     for (const key of fields) {
         if (result[key] === '') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             result[key] = null as any;
         }
     }

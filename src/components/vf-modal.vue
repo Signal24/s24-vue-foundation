@@ -1,6 +1,6 @@
 <template>
-    <div :id="id" class="vf-overlay vf-modal-wrap" :class="classList" ref="overlay">
-        <form action="." class="vf-modal" :class="{ scrolls }" @submit.prevent="$emit('formSubmit')" ref="form">
+    <div :id="id" ref="overlay" class="vf-overlay vf-modal-wrap" :class="classList">
+        <form ref="form" action="." class="vf-modal" :class="{ scrolls }" @submit.prevent="$emit('formSubmit')">
             <div v-if="$slots.header" class="vf-modal-header">
                 <slot name="header" />
                 <i v-if="props.closeX" class="close" @click="closeParent"></i>
@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
     window.removeEventListener('keydown', handleEscapeKey);
 
     const areOtherModalsOpen = document.body.querySelectorAll('.vf-modal').length > 0;
-    areOtherModalsOpen || document.body.classList.remove('vf-modal-open');
+    if (!areOtherModalsOpen) document.body.classList.remove('vf-modal-open');
 });
 
 function handleOverlayClick(e: MouseEvent) {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Writable } from 'type-fest';
 import {
     type AllowedComponentProps,
@@ -69,6 +70,7 @@ export type ObjectComponentProps<T extends Vue__ComponentPublicInstanceConstruct
     Omit<ObjectComponentConfig<T>['$props'], keyof VNodeProps | keyof AllowedComponentProps>
 >;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type ObjectOrDefault<T> = T extends object ? T : PropsWithCallback<{}>;
 export type OverlayComponent = Vue__ComponentPublicInstanceConstructor | ((props: any) => any);
 export type OverlayComponentConfig<T> = T extends Vue__ComponentPublicInstanceConstructor
@@ -124,7 +126,9 @@ export function createOverlayInjection<C extends OverlayComponent, R extends Com
 }
 
 export function dismissOverlayInjectionByInstance(instance: AnyComponentPublicInstance) {
-    instance.$ && dismissOverlayInjectionByInternalInstance(instance.$);
+    if (instance.$) {
+        dismissOverlayInjectionByInternalInstance(instance.$);
+    }
 }
 
 export function dismissOverlayInjectionByInternalInstance(instance: ComponentInternalInstance) {

@@ -6,16 +6,19 @@
 import { isEqual } from 'lodash';
 import { computed, ref, watch } from 'vue';
 
-import VfSmartSelect from './smart-select.vue';
+import VfSmartSelect from './vf-smart-select.vue';
 
-type GenericObject = { [key: string]: any };
+interface IComputedOption {
+    value: string;
+    label: string;
+}
 
 const props = defineProps<{
     modelValue: string | null | undefined;
     nullTitle?: string;
     placeholder?: string;
-    options: Record<string, string> | string[];
-    formatter?: (value: any) => string;
+    options: { [K: string]: string } | string[];
+    formatter?: (item: IComputedOption) => string;
 }>();
 
 const computedOpts = computed(() => {
@@ -29,16 +32,16 @@ const computedOpts = computed(() => {
 
 const ezFormatter = computed(() => {
     if (props.formatter) {
-        return (o: GenericObject) => props.formatter?.(o.label);
+        return (o: IComputedOption) => props.formatter!(o);
     }
-    return (o: GenericObject) => o.label;
+    return (o: IComputedOption) => o.label;
 });
 
 const emit = defineEmits<{
     (e: 'update:modelValue', value: string | null): void;
 }>();
 
-const selectedItem = ref<GenericObject | null>(computedOpts.value.find(o => o.value === props.modelValue) ?? null);
+const selectedItem = ref<IComputedOption | null>(computedOpts.value.find(o => o.value === props.modelValue) ?? null);
 watch(
     () => props.modelValue,
     value => {
@@ -46,6 +49,7 @@ watch(
     }
 );
 watch(selectedItem, value => {
-    emit('update:modelValue', value ? (computedOpts.value.find(o => isEqual(o, value))?.value ?? null) : null);
+    const emitValue = value ? computedOpts.value.find(o => isEqual(o, value))?.value : null;
+    emit('update:modelValue', emitValue ?? null);
 });
 </script>

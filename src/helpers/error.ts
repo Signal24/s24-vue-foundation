@@ -8,6 +8,7 @@ export class UserError extends Error {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(err: any): string {
     if (err instanceof UserError) {
         return err.message;
@@ -17,6 +18,7 @@ export function formatError(err: any): string {
     return `An application error has occurred:\n\n${errMessage}\n\nPlease refresh the page and try again. If this error persists, ${VfOptions.unhandledErrorSupportText}.`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function toError(err: any) {
     return err instanceof Error ? err : new Error(String(err));
 }
@@ -25,6 +27,7 @@ interface IErrorAlertOptions {
     title?: string;
     classes?: string[];
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function handleErrorAndAlert(errIn: any, options?: IErrorAlertOptions) {
     const err = toError(errIn);
 
@@ -39,6 +42,7 @@ export async function handleErrorAndAlert(errIn: any, options?: IErrorAlertOptio
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function handleError(errIn: any) {
     const err = toError(errIn);
 
