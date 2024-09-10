@@ -443,7 +443,8 @@ function highlightInitialOption() {
     if (!highlightedOptionKey.value) return;
     const highlightedOptionIdx = effectiveOptions.value.findIndex(option => option.key == highlightedOptionKey.value);
     const containerEl = optionsContainer.value!;
-    const highlightedOptionEl = containerEl.querySelectorAll('.option')[highlightedOptionIdx] as HTMLElement;
+    const highlightedOptionEl = containerEl?.querySelectorAll('.option')[highlightedOptionIdx] as HTMLElement;
+    if (!highlightedOptionEl) return;
     containerEl.scrollTop = highlightedOptionEl.offsetTop;
 }
 
@@ -463,7 +464,8 @@ function incrementHighlightedOption(increment: number) {
     highlightedOptionKey.value = effectiveOptions.value[targetOptionIdx].key;
 
     const containerEl = optionsContainer.value!;
-    const targetOptionEl = containerEl.querySelectorAll('.option')[targetOptionIdx] as HTMLElement;
+    const targetOptionEl = containerEl?.querySelectorAll('.option')[targetOptionIdx] as HTMLElement;
+    if (!targetOptionEl) return;
 
     if (targetOptionEl.offsetTop < containerEl.scrollTop) {
         containerEl.scrollTop = targetOptionEl.offsetTop;
