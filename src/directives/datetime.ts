@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { compact } from 'lodash';
 import type { DirectiveBinding, ObjectDirective } from 'vue';
 
 import { VfOptions } from '../config';
@@ -28,20 +29,36 @@ function getDateTimeValue(el: HTMLElement, binding: DirectiveBinding<string>) {
     }
 
     let formatSpec = el.attributes.getNamedItem('format')?.value;
+    const isDateOnly = el.attributes.getNamedItem('date-only') !== null;
 
     if (!formatSpec && el.attributes.getNamedItem('relative-date') !== null) {
         const now = new Date();
-        if (now.getFullYear() == theDate.getFullYear() && now.getMonth() == theDate.getMonth() && now.getDate() == theDate.getDate()) {
-            prefix = 'at';
+        if (now.getFullYear() === theDate.getFullYear() && now.getMonth() === theDate.getMonth() && now.getDate() === theDate.getDate()) {
+            prefix = 'at'; // ???
             formatSpec = 'HH:mm';
         }
     }
 
+    if (!formatSpec && el.attributes.getNamedItem('simplified-date') !== null) {
+        let dateSpec: string | null = null;
+        const now = new Date();
+        if (now.getFullYear() === theDate.getFullYear()) {
+            if (now.getMonth() !== theDate.getMonth() || now.getDate() !== theDate.getDate()) {
+                dateSpec = 'M/d';
+            }
+        } else {
+            dateSpec = 'M/d/YY';
+        }
+
+        const timeSpec = isDateOnly ? null : VfOptions.defaultTimeFormat;
+        formatSpec = compact([dateSpec, timeSpec]).join(' ');
+    }
+
     if (!formatSpec) {
-        if (el.attributes.getNamedItem('date-only') !== null) {
+        if (isDateOnly) {
             formatSpec = VfOptions.defaultDateFormat;
         } else {
-            formatSpec = VfOptions.defaultDateTimeFormat;
+            formatSpec = `${VfOptions.defaultDateFormat} ${VfOptions.defaultTimeFormat}`;
         }
     }
 
