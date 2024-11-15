@@ -32,7 +32,7 @@ function phone(value: string | null) {
 
 function upperFirst(value: null): null;
 function upperFirst(value: string): string;
-function upperFirst(value: string | null) {
+function upperFirst(value: string | null): null | string {
     return value ? _upperFirst(value) : null;
 }
 

@@ -8,6 +8,13 @@ import { defineConfig } from 'vite';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue(), eslintPlugin()],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                api: 'modern-compiler'
+            }
+        }
+    },
     build: {
         cssCodeSplit: true,
         lib: {
