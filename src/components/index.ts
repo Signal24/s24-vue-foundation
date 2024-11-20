@@ -5,6 +5,7 @@ import VfModal from './vf-modal.vue';
 import VfSmartSelect from './vf-smart-select.vue';
 
 export * from './alert-helpers';
+export * from './modal-helpers';
 export * from './overlay-container';
 export * from './toast-helpers';
 
