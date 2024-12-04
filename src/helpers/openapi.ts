@@ -1,12 +1,20 @@
-import { installOpenApiClientInterceptors, isOpenApiError } from '@signal24/openapi-client-codegen/browser';
+import { configureOpenApiClient, type OpenApiClient, type OpenApiClientOptions, OpenApiError } from '@signal24/openapi-client-codegen/browser';
 
 import { UserError } from '.';
 
-export function installApiClientInterceptors(clientOptions: Parameters<typeof installOpenApiClientInterceptors>[0]) {
-    installOpenApiClientInterceptors({
+export function configureVfOpenApiClient(client: OpenApiClient, clientOptions: OpenApiClientOptions) {
+    configureOpenApiClient(client, {
         ...clientOptions,
+
         onError(err, options) {
-            if (isOpenApiError(err) && err.status === 422 && typeof err.body === 'object' && 'error' in err.body) {
+            if (
+                err instanceof OpenApiError &&
+                err.response.status === 422 &&
+                typeof err.body === 'object' &&
+                err.body &&
+                'error' in err.body &&
+                typeof err.body.error === 'string'
+            ) {
                 err = new UserError(err.body.error);
             }
 
