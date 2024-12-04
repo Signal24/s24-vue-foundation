@@ -813,15 +813,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@signal24/openapi-client-codegen@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@signal24/openapi-client-codegen@npm:2.1.0"
+"@signal24/openapi-client-codegen@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@signal24/openapi-client-codegen@npm:2.1.1"
   dependencies:
     "@hey-api/client-fetch": "npm:^0.5.0"
     "@hey-api/openapi-ts": "npm:^0.58.0"
   bin:
     generate-openapi-client: dist/src/node/cli.js
-  checksum: 10c0/1b01ce66734ddc07913782fe60265889d50187f5679a4db7bceb9cbb1938c45175e3d734ec8992c5e0a2e5bec7a33bfe838d0519bdf3c2ca4d410194620d2309
+  checksum: 10c0/30d6b79771efd517c858c619c06acb1ae76acf5671851a8bbee4d6cb65b9dea8808836a1165f68a448019ebf211884607e26234d7d920debfd484defdaf0dfcd
   languageName: node
   linkType: hard
 
@@ -831,7 +831,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:9.14.0"
     "@nabla/vite-plugin-eslint": "npm:^2.0.4"
-    "@signal24/openapi-client-codegen": "npm:^2.1.0"
+    "@signal24/openapi-client-codegen": "npm:^2.1.1"
     "@tsconfig/node22": "npm:^22.0.0"
     "@types/eslint__js": "npm:^8.42.3"
     "@types/jsdom": "npm:^21.1.7"
@@ -864,7 +864,7 @@ __metadata:
     vue: "npm:^3.5.13"
     vue-tsc: "npm:^2.1.10"
   peerDependencies:
-    "@signal24/openapi-client-codegen": ^2.1.0
+    "@signal24/openapi-client-codegen": ^2.1.1
     date-fns: ^3.0.6
     lodash: ^4.17.21
     vue: ^3.4.0
