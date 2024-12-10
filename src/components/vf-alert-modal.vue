@@ -1,7 +1,7 @@
 <template>
     <Modal :class="['vf-alert', ...(classes ?? [])]">
         <template v-if="title" #header>
-            <h1>{{ title }}</h1>
+            {{ title }}
         </template>
 
         <div v-if="isHtml" :innerHtml="message" class="user-message"></div>

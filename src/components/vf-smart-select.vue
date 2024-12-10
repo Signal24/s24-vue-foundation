@@ -81,6 +81,7 @@ const props = defineProps<{
     optionsListId?: string;
     debug?: boolean;
     required?: boolean;
+    showCreateTextOnNewItem?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -106,6 +107,7 @@ const selectedOptionTitle = ref<string | null>(null);
 const shouldDisplayOptions = ref(false);
 const highlightedOptionKey = ref<string | symbol | null>(null);
 const shouldShowCreateOption = ref(false);
+const shouldShowCreateTextOnNewItem = computed(() => props.showCreateTextOnNewItem ?? true);
 
 const effectivePrependOptions = computed(() => props.prependOptions ?? []);
 const effectiveAppendOptions = computed(() => props.appendOptions ?? []);
@@ -190,7 +192,9 @@ const effectiveOptions = computed(() => {
                 if (!hasExactMatch) {
                     options.push({
                         key: CreateSymbol,
-                        title: 'Create <strong>' + searchText.value.trim() + '</strong>...'
+                        title: shouldShowCreateTextOnNewItem.value
+                            ? 'Create <strong>' + searchText.value.trim() + '</strong>...'
+                            : searchText.value.trim()
                     });
                 }
             }
@@ -303,6 +307,7 @@ function handleKeyDown(e: KeyboardEvent) {
     if (e.key == 'Escape') {
         e.stopPropagation();
         (e.target as HTMLInputElement).blur();
+        focusNextInput();
         return;
     }
 
@@ -496,6 +501,7 @@ function selectOption(option: OptionDescriptor) {
     }
 
     searchField.value?.blur();
+    focusNextInput();
 }
 
 function handleValueChanged() {
@@ -514,6 +520,21 @@ function handleValueChanged() {
 
 function addRemoteOption(option: T) {
     loadedOptions.value.unshift(option);
+}
+
+function focusNextInput() {
+    let parent = el.value?.parentElement;
+    while (parent && parent.tagName !== 'FORM' && parent.tagName !== 'BODY') {
+        parent = parent.parentElement;
+    }
+    if (!parent) return;
+
+    const allFocusableElements = parent.querySelectorAll('input, button, textarea, select, [tabindex]:not([tabindex="-1"])');
+    if (!allFocusableElements) return;
+
+    const currentInputIndex = Array.from(allFocusableElements).findIndex(el => el === searchField.value);
+    const nextInput = allFocusableElements[currentInputIndex + 1] as HTMLElement;
+    if (nextInput) setTimeout(() => nextInput.focus(), 0);
 }
 </script>
 
