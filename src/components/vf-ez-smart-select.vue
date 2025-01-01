@@ -18,7 +18,7 @@ const props = defineProps<{
     nullTitle?: string;
     placeholder?: string;
     options: { [K: string]: string } | string[];
-    formatter?: (item: IComputedOption) => string;
+    formatter?: (title: string) => string;
 }>();
 
 const computedOpts = computed(() => {
@@ -32,7 +32,7 @@ const computedOpts = computed(() => {
 
 const ezFormatter = computed(() => {
     if (props.formatter) {
-        return (o: IComputedOption) => props.formatter!(o);
+        return (o: IComputedOption) => props.formatter!(o.label);
     }
     return (o: IComputedOption) => o.label;
 });
