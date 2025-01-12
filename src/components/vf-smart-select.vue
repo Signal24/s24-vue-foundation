@@ -82,6 +82,7 @@ const props = defineProps<{
     debug?: boolean;
     required?: boolean;
     showCreateTextOnNewItem?: boolean;
+    autoNext?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -523,6 +524,8 @@ function addRemoteOption(option: T) {
 }
 
 function focusNextInput() {
+    if (!props.autoNext) return;
+
     let parent = el.value?.parentElement;
     while (parent && parent.tagName !== 'FORM' && parent.tagName !== 'BODY') {
         parent = parent.parentElement;
