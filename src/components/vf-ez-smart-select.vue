@@ -1,5 +1,5 @@
 <template>
-    <VfSmartSelect v-model="selectedItem" :options="computedOpts" :formatter="ezFormatter" :null-title="nullTitle" />
+    <VfSmartSelect v-model="selectedItem" :options="computedOpts" :formatter="ezFormatter" :null-title="nullTitle" :placeholder="placeholder" />
 </template>
 
 <script lang="ts" setup>
