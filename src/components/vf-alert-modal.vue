@@ -4,6 +4,8 @@
             {{ title }}
         </template>
 
+        <i v-if="iconClass" :class="['vf-alert-icon', iconClass]" />
+
         <div v-if="isHtml" :innerHtml="message" class="user-message"></div>
         <div v-else :innerText="textMessage"></div>
 
@@ -30,6 +32,7 @@ const props = defineProps<{
     title?: string;
     message: string | Error;
     shouldConfirm?: boolean;
+    iconClass?: string | string[];
     callback: (ok: boolean) => void;
 }>();
 
@@ -55,6 +58,10 @@ const textMessage = computed(() => {
     &.wait {
         .vf-modal-content {
             text-align: center;
+        }
+
+        .vf-alert-icon {
+            margin-bottom: 12px;
         }
     }
 

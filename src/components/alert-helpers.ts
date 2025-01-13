@@ -5,6 +5,7 @@ interface IAlertOptions {
     title?: string;
     message: string | Error;
     classes?: string[];
+    iconClass?: string | string[];
 }
 
 function resolveAlertParams(arg0: string | Error | IAlertOptions, arg1?: string | Error) {
