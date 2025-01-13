@@ -47,7 +47,7 @@ function getDateTimeValue(el: HTMLElement, binding: DirectiveBinding<string>) {
                 dateSpec = 'M/d';
             }
         } else {
-            dateSpec = 'M/d/YY';
+            dateSpec = 'M/d/yy';
         }
 
         const timeSpec = isDateOnly ? null : VfOptions.defaultTimeFormat;
