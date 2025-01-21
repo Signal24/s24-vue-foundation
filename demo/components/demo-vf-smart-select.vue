@@ -1,6 +1,8 @@
 <template>
     <div id="demo-vf-smart-select">
         <VfSmartSelect v-model="selectedOption" :options="options" label-field="label" />
+
+        Selected value: {{ selectedOption?.label ?? '-' }}
     </div>
 </template>
 
