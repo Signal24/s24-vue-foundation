@@ -5,17 +5,6 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@apidevtools/json-schema-ref-parser@npm:11.7.2":
-  version: 11.7.2
-  resolution: "@apidevtools/json-schema-ref-parser@npm:11.7.2"
-  dependencies:
-    "@jsdevtools/ono": "npm:^7.1.3"
-    "@types/json-schema": "npm:^7.0.15"
-    js-yaml: "npm:^4.1.0"
-  checksum: 10c0/90dd8e60e25ccfe5c7de2453de893d5f5bb7c6cabcce028edf0678a119f0e433f422d730aa14fd718542e80fa7b3acf40923d69dc8e9f6c25603842b76ad2f16
-  languageName: node
-  linkType: hard
-
 "@asamuzakjp/css-color@npm:^2.8.2":
   version: 2.8.3
   resolution: "@asamuzakjp/css-color@npm:2.8.3"
@@ -423,26 +412,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hey-api/client-fetch@npm:^0.5.0":
-  version: 0.5.7
-  resolution: "@hey-api/client-fetch@npm:0.5.7"
-  checksum: 10c0/fc4408f0965ed9cc8cc9835caa9dea4247c6347b4a0bc16d8250522dbaf2853b93849ee3b802a1369ef8f715d22da3dcc2cd5d0e142da0bbae1a7da886b88327
+"@hey-api/client-fetch@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "@hey-api/client-fetch@npm:0.7.1"
+  checksum: 10c0/b6b9069fb7ac1c5329147bf9cc6b35f33af36d7634d7918950ce94391dd0a4cc76282271c91ce9c6ea0af9a695ab17c17f61b0f141c9d32336fc74089fec0d2c
   languageName: node
   linkType: hard
 
-"@hey-api/openapi-ts@npm:^0.58.0":
-  version: 0.58.0
-  resolution: "@hey-api/openapi-ts@npm:0.58.0"
+"@hey-api/json-schema-ref-parser@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@hey-api/json-schema-ref-parser@npm:1.0.1"
   dependencies:
-    "@apidevtools/json-schema-ref-parser": "npm:11.7.2"
+    "@jsdevtools/ono": "npm:^7.1.3"
+    "@types/json-schema": "npm:^7.0.15"
+    js-yaml: "npm:^4.1.0"
+  checksum: 10c0/3eced2a7a990be712497385eba262f2e5c84957e13b9999831d1541ef146db57eba78a558226ad5d2e6b7a3ad5bae4dbdc32a37e59dd4380c987ca1c74c7337c
+  languageName: node
+  linkType: hard
+
+"@hey-api/openapi-ts@npm:^0.62.3":
+  version: 0.62.3
+  resolution: "@hey-api/openapi-ts@npm:0.62.3"
+  dependencies:
+    "@hey-api/json-schema-ref-parser": "npm:1.0.1"
     c12: "npm:2.0.1"
-    commander: "npm:12.1.0"
+    commander: "npm:13.0.0"
     handlebars: "npm:4.7.8"
   peerDependencies:
-    typescript: ^5.x
+    typescript: ^5.5.3
   bin:
     openapi-ts: bin/index.cjs
-  checksum: 10c0/9d212d90a016f749ca3b31ce6f1e757e28ef682ba8bf6acff42b90ec05a067a0aa3e3b4c8f6765e4b54a7efa3501e1707ff0721b037ef217583b161128fa5df5
+  checksum: 10c0/0dd39aab1d1904fbabf09d7573915981060525f97e947fccba98d0f97b6226672ca80aefe0c7097a8da2960220b5c9aaa04d3b840d06716aff816c9f70d1b0c9
   languageName: node
   linkType: hard
 
@@ -905,15 +905,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@signal24/openapi-client-codegen@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@signal24/openapi-client-codegen@npm:2.1.2"
+"@signal24/openapi-client-codegen@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@signal24/openapi-client-codegen@npm:2.2.1"
   dependencies:
-    "@hey-api/client-fetch": "npm:^0.5.0"
-    "@hey-api/openapi-ts": "npm:^0.58.0"
+    "@hey-api/client-fetch": "npm:^0.7.1"
+    "@hey-api/openapi-ts": "npm:^0.62.3"
   bin:
     generate-openapi-client: dist/src/node/cli.js
-  checksum: 10c0/1913aef14fa8c1475e62fcfbc363124df0980b17167232a18b7f09646423ea5959ec5bf7ea27809b340eb86665a4a280fad1f3ed1ebb8104825f7a1d48682514
+  checksum: 10c0/5d0dfa1479bc081fb2e59e0e71c14405e03cb919caeb40e2cec15e7b8f8dc9fb94e8d7e3dfd956770b8ce76406b97022b6b297fd64e4a2492ef67a6f33c0aa25
   languageName: node
   linkType: hard
 
@@ -923,7 +923,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:9.18.0"
     "@nabla/vite-plugin-eslint": "npm:^2.0.5"
-    "@signal24/openapi-client-codegen": "npm:^2.1.2"
+    "@signal24/openapi-client-codegen": "npm:^2.2.1"
     "@tsconfig/node22": "npm:^22.0.0"
     "@types/eslint__js": "npm:^8.42.3"
     "@types/jsdom": "npm:^21.1.7"
@@ -2025,10 +2025,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:12.1.0":
-  version: 12.1.0
-  resolution: "commander@npm:12.1.0"
-  checksum: 10c0/6e1996680c083b3b897bfc1cfe1c58dfbcd9842fd43e1aaf8a795fbc237f65efcc860a3ef457b318e73f29a4f4a28f6403c3d653d021d960e4632dd45bde54a9
+"commander@npm:13.0.0":
+  version: 13.0.0
+  resolution: "commander@npm:13.0.0"
+  checksum: 10c0/8ba1e2b83bfdbcefd967aa505f5f5dc58202aa5f8e10437f61f6980dd8a69f868dba439a261f9fb72fc543c5f6fe58140e37b001a4c70b92ae22527abe94dfe1
   languageName: node
   linkType: hard
 
