@@ -21,17 +21,19 @@
                     v-for="option in effectiveOptions"
                     :key="String(option.key)"
                     class="option"
-                    :class="{
-                        highlighted: highlightedOptionKey === option.key
-                    }"
+                    :class="[highlightedOptionKey === option.key && 'highlighted', option.ref && classForOption?.(option.ref)]"
                     @mousemove="handleOptionHover(option)"
                     @mousedown="selectOption(option)"
                 >
-                    <div class="title" v-html="option.title" />
-                    <div v-if="option.subtitle" class="subtitle" v-html="option.subtitle" />
+                    <slot name="option" :option="option">
+                        <div class="title" v-html="option.title" />
+                        <div v-if="option.subtitle" class="subtitle" v-html="option.subtitle" />
+                    </slot>
                 </div>
                 <div v-if="!effectiveOptions.length && searchText" class="no-results">
-                    {{ effectiveNoResultsText }}
+                    <slot name="no-results">
+                        {{ effectiveNoResultsText }}
+                    </slot>
                 </div>
             </template>
         </div>
@@ -43,19 +45,12 @@ import { debounce, isEqual } from 'lodash';
 import { computed, onMounted, type Ref, ref, watch } from 'vue';
 
 import { escapeHtml } from '../helpers/string';
+import type { VfSmartSelectOptionDescriptor } from './vf-smart-select.types';
 
 const NullSymbol = Symbol('null');
 const CreateSymbol = Symbol('create');
 
 const VALID_KEYS = `\`1234567890-=[]\\;',./~!@#$%^&*()_+{}|:"<>?qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM`;
-
-interface OptionDescriptor {
-    key: string | symbol;
-    title: string;
-    subtitle?: string | null;
-    searchContent?: string;
-    ref?: T;
-}
 
 const props = defineProps<{
     modelValue: V | null;
@@ -75,6 +70,7 @@ const props = defineProps<{
     labelField?: keyof T;
     formatter?: (option: T) => string;
     subtitleFormatter?: (option: T) => string;
+    classForOption?: (option: T) => string;
     nullTitle?: string;
     noResultsText?: string;
     disabled?: boolean;
@@ -166,7 +162,7 @@ const optionsDescriptors = computed(() => {
             subtitle,
             searchContent: searchContent.join(''),
             ref: option
-        } as OptionDescriptor;
+        } as VfSmartSelectOptionDescriptor<T>;
     });
 });
 
@@ -454,7 +450,7 @@ function highlightInitialOption() {
     containerEl.scrollTop = highlightedOptionEl.offsetTop;
 }
 
-function handleOptionHover(option: OptionDescriptor) {
+function handleOptionHover(option: VfSmartSelectOptionDescriptor<T>) {
     highlightedOptionKey.value = option ? option.key : null;
 }
 
@@ -480,7 +476,7 @@ function incrementHighlightedOption(increment: number) {
     }
 }
 
-function selectOption(option: OptionDescriptor) {
+function selectOption(option: VfSmartSelectOptionDescriptor<T>) {
     isSearching.value = false;
 
     if (option.key == NullSymbol) {

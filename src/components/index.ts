@@ -8,5 +8,6 @@ export * from './alert-helpers';
 export * from './modal-helpers';
 export * from './overlay-container';
 export * from './toast-helpers';
+export * from './vf-smart-select.types';
 
 export { VfAjaxSelect, VfAlertModal, VfEzSmartSelect, VfModal, VfSmartSelect };
